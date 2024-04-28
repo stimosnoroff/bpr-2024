@@ -1,0 +1,86 @@
+<!-- Honeytoken 1 -->
+<var name="Honeyfile">Password.txt</var>
+<group name="windows, windows_security,">
+  <rule id="100111" level="12">
+     <if_sid>60103</if_sid>
+     <field name="win.system.eventID">^4663$</field>
+     <field name="win.eventdata.objectName">$Honeyfile</field>
+     <description>Object access information into $Honeyfile</description>
+         <options>no_full_log</options>
+  </rule>
+  <rule id="100112" level="16" frequency="3" timeframe="2">
+     <if_matched_sid>100111</if_matched_sid>
+     <description>Honeytoken 1 - Passwords.txt: $(win.eventdata.subjectUserName) accessed @ $(win.system.Computer).</description>
+     <options>no_full_log</options>
+  </rule>
+</group>
+
+<!-- Honeytoken 2 -->
+<var name="Honeyfile">Dev_API.txt</var>
+<group name="windows, windows_security,">
+  <rule id="100113" level="12">
+     <if_sid>60103</if_sid>
+     <field name="win.system.eventID">^4663$</field>
+     <field name="win.eventdata.objectName">$Honeyfile</field>
+     <description>Object access information into $Honeyfile</description>
+         <options>no_full_log</options>
+  </rule>
+  <rule id="100114" level="16" frequency="3" timeframe="2">
+     <if_matched_sid>100113</if_matched_sid>
+     <description>Honeytoken 2 - Dev_API.txt: $(win.eventdata.subjectUserName) accessed @ $(win.system.Computer).</description>
+     <options>no_full_log</options>
+  </rule>
+</group>
+
+<!-- Honeytoken 3 -->
+<var name="Honeyuser">honeyuser</var>
+<group name="windows, windows_security,">
+  <rule id="100115" level="16">
+     <if_sid>60122</if_sid>
+     <field name="win.eventdata.targetUserName">$Honeyuser</field>
+     <description>Honeytoken 3: Honeyaccount $(win.eventdata.targetUserName) is activated @ $(win.system.Computer)</description>
+         <options>no_full_log</options>
+  </rule>
+</group>
+
+<!-- Honeytoken 4-1 -->
+<group name="sysmon,">
+  <rule id="100118" level="16">
+    <if_sid>61650</if_sid>
+    <field name="win.system.eventID">^22$</field>
+    <field name="win.eventdata.queryName">admin.ht.local</field>
+    <description>Honeytoken 4-1: HoneyDNS $(win.eventdata.queryName) engaged from system: $(win.system.computer), user: $(win.eventdata.user)</description>
+    <options>no_full_log</options>
+    <group>sysmon_event_22,</group>
+  </rule>
+</group>
+
+<!-- Honeytoken 5 ##### -->
+<group name="sysmon,">
+  <rule id="100122" level="16">
+    <if_sid>61650</if_sid>
+    <field name="win.system.eventID">^22$</field>
+    <field name="win.eventdata.queryName">
+    fs3u3ujbsmwpyebrg9t7ijpde.app.smossmos.no</field>
+    <description>Honeytoken 5: CanaryDNS $(win.eventdata.queryName): System:$(win.system.computer) User:$(win.eventdata.user)</description>
+    <options>no_full_log</options>
+    <group>sysmon_event_22,</group>
+  </rule>
+  </group>
+  
+  <!-- Honeytoken 6 -->
+<var name="Honeyfile">honeyexcel.xlsx</var>
+<group name="windows, windows_security,">
+    <rule id="100123" level="12">
+        <if_sid>60103</if_sid>
+        <field name="win.system.eventID">^4663$</field>
+        <field name="win.eventdata.objectName">$Honeyfile</field>
+        <description>Object access information into $Honeyfile</description>
+            <options>no_full_log</options>
+</rule>
+<rule id="100124" level="16" frequency="3" timeframe="2">
+    <if_matched_sid>100123</if_matched_sid>
+    <description>Honeytoken 6: CanaryExcel file: $(win.eventdata.objectName) accessed @ $(win.system.Computer).</description>
+    <options>no_full_log</options>
+</rule>
+</group>
